@@ -3,29 +3,33 @@ package repository.jdbc;
 import entity.Customer;
 import repository.CustomerRepository;
 
+import java.util.List;
+
 public class CustomerRepositoryImpl implements CustomerRepository {
-    @Override
-    public void findAll() {
 
-    }
 
     @Override
-    public Object findById(Object id) {
+    public List<Customer> findAll() {
         return null;
     }
 
     @Override
-    public Object save(Object entity) {
+    public Customer findById(Integer id) {
         return null;
     }
 
     @Override
-    public void update(Object entity) {
+    public Integer save(Customer entity) {
+        return null;
+    }
+
+    @Override
+    public void update(Customer entity) {
 
     }
 
     @Override
-    public void deleteById(Object id) {
+    public void deleteById(Integer id) {
 
     }
 

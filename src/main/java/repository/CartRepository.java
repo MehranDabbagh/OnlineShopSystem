@@ -1,4 +1,6 @@
 package repository;
 
-public interface CartRepository extends CrudRepository{
+import entity.Cart;
+
+public interface CartRepository extends CrudRepository <Cart,Integer> {
 }

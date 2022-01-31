@@ -1,4 +1,6 @@
 package repository;
 
-public interface ProductRepository extends CrudRepository{
+import entity.Product;
+
+public interface ProductRepository extends CrudRepository<Product,Integer> {
 }

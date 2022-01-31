@@ -1,30 +1,34 @@
 package repository.jdbc;
 
+import entity.Cart;
 import repository.CartRepository;
 
+import java.util.List;
+
 public class CartRepositoryImpl implements CartRepository {
-    @Override
-    public void findAll() {
-
-    }
 
     @Override
-    public Object findById(Object id) {
+    public List<Cart> findAll() {
         return null;
     }
 
     @Override
-    public Object save(Object entity) {
+    public Cart findById(Integer id) {
         return null;
     }
 
     @Override
-    public void update(Object entity) {
+    public Integer save(Cart entity) {
+        return null;
+    }
+
+    @Override
+    public void update(Cart entity) {
 
     }
 
     @Override
-    public void deleteById(Object id) {
+    public void deleteById(Integer id) {
 
     }
 }

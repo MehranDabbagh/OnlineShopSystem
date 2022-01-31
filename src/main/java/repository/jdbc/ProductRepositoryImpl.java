@@ -1,30 +1,34 @@
 package repository.jdbc;
 
+import entity.Product;
 import repository.ProductRepository;
 
+import java.util.List;
+
 public class ProductRepositoryImpl implements ProductRepository {
-    @Override
-    public void findAll() {
-
-    }
 
     @Override
-    public Object findById(Object id) {
+    public List<Product> findAll() {
         return null;
     }
 
     @Override
-    public Object save(Object entity) {
+    public Product findById(Integer id) {
         return null;
     }
 
     @Override
-    public void update(Object entity) {
+    public Integer save(Product entity) {
+        return null;
+    }
+
+    @Override
+    public void update(Product entity) {
 
     }
 
     @Override
-    public void deleteById(Object id) {
+    public void deleteById(Integer id) {
 
     }
 }

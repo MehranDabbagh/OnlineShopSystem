@@ -3,34 +3,37 @@ package repository.jdbc;
 import entity.Category;
 import repository.CategoryRepository;
 
+import java.util.List;
+
 public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public void findAllChildes(Category category) {
 
     }
 
-    @Override
-    public void findAll() {
-
-    }
 
     @Override
-    public Object findById(Object id) {
+    public List<Category> findAll() {
         return null;
     }
 
     @Override
-    public Object save(Object entity) {
+    public Category findById(Integer id) {
         return null;
     }
 
     @Override
-    public void update(Object entity) {
+    public Integer save(Category entity) {
+        return null;
+    }
+
+    @Override
+    public void update(Category entity) {
 
     }
 
     @Override
-    public void deleteById(Object id) {
+    public void deleteById(Integer id) {
 
     }
 }
