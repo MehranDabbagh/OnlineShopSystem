@@ -6,6 +6,6 @@ create table if not exists products (id serial primary key,label varchar (50),pr
 create table if not exists cart(id serial primary key, address varchar (50),phonenumber BIGINT,done boolean,customerId integer,
     CONSTRAINT fk_customer
     FOREIGN KEY (customerId) REFERENCES customer(id));
-create table if not exists cartProducts(cartId integer,productId integer,
+create table if not exists cartProducts(id serial primary key ,cartId integer,productId integer,
 constraint fk_customer foreign key (cartId) references cart(id) ,
 foreign key (productId) references products(id));
