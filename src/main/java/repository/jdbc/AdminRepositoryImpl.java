@@ -60,7 +60,7 @@ public class AdminRepositoryImpl implements AdminRepository {
             ResultSet result=preparedStatement.executeQuery();
             if(result.next()){
               Admin admin=new Admin(result.getString("username"),result.getString("password"));
-              admin.setId(result.getInt("id"));
+              admin.setId(id);
               return admin;
             }
         }catch (SQLException e){

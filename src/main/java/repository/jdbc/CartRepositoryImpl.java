@@ -48,7 +48,7 @@ public class CartRepositoryImpl implements CartRepository {
             if(resultSet.next()){
               Customer customer=customerRepository.findById(resultSet.getInt("customerid"));
                 Cart cart=new Cart(resultSet.getString("address"),resultSet.getLong("phonenumber"),resultSet.getBoolean("done"),customer);
-                cart.setId(resultSet.getInt("id"));
+                cart.setId(id);
                 return cart;
             }
         }catch (SQLException e){
