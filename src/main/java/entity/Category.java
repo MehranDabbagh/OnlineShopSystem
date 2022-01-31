@@ -11,6 +11,9 @@ public class Category extends BaseEntity {
         this.parentCategory = parentCategory;
     }
 
+    public Category() {
+    }
+
     public String getName() {
         return name;
     }

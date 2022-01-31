@@ -11,6 +11,9 @@ public class Customer extends User {
     private Long phoneNumber;
     private Cart cart;
 
+    public Customer() {
+    }
+
     public Customer(String username, String password, String firstName, String lastName, Long nationalCode, String email, Long phoneNumber) {
         super(username, password);
         this.firstName = firstName;

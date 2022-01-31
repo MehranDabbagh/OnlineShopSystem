@@ -15,7 +15,7 @@ import java.util.List;
 
 public class CartRepositoryImpl implements CartRepository {
     Connection connection= PostgresConnection.getInstance().getConnection();
-    CustomerRepositoryImpl customerRepository=new CustomerRepositoryImpl();
+
     @Override
     public List<Cart> findAll() {
         String sql="SELECT * from cart ";
@@ -26,7 +26,8 @@ public class CartRepositoryImpl implements CartRepository {
             ResultSet resultSet=preparedStatement.executeQuery();
             Customer customer;
             while(resultSet.next()){
-             customer= customerRepository.findById(resultSet.getInt("customerid"));
+             customer= new Customer();
+             customer.setId(resultSet.getInt("customerid"));
             Cart cart=new Cart(resultSet.getString("address"),resultSet.getLong("phonenumber"),resultSet.getBoolean("done"),customer);
             cart.setId(resultSet.getInt("id"));
             carts.add(cart);
@@ -46,7 +47,8 @@ public class CartRepositoryImpl implements CartRepository {
             preparedStatement.setInt(1,id);
             ResultSet resultSet=preparedStatement.executeQuery();
             if(resultSet.next()){
-              Customer customer=customerRepository.findById(resultSet.getInt("customerid"));
+              Customer customer=new Customer();
+              customer.setId(resultSet.getInt("customerid"));
                 Cart cart=new Cart(resultSet.getString("address"),resultSet.getLong("phonenumber"),resultSet.getBoolean("done"),customer);
                 cart.setId(id);
                 return cart;
