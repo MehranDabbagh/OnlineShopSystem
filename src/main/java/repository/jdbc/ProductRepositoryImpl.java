@@ -25,7 +25,7 @@ public class ProductRepositoryImpl implements ProductRepository {
             ResultSet resultSet=preparedStatement.executeQuery();
             while(resultSet.next()){
                 Category parentcategory=new Category();
-               parentcategory.setName(  resultSet.getString("category"));
+               parentcategory.setId(  resultSet.getInt("categoryid"));
                 product= new Product(resultSet.getString("label"),resultSet.getInt("price"),
                      parentcategory );
                 products.add(product);
@@ -47,7 +47,7 @@ public class ProductRepositoryImpl implements ProductRepository {
             ResultSet resultSet=preparedStatement.executeQuery();
             if(resultSet.next()){
                 Category parentcategory=new Category();
-                parentcategory.setName(  resultSet.getString("category"));
+                parentcategory.setId(  resultSet.getInt("categoryid"));
                 product= new Product(resultSet.getString("label"),resultSet.getInt("price"),
                         parentcategory );
                 return product;

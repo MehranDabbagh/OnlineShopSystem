@@ -54,7 +54,8 @@ public class CategoryRepositoryImpl implements CategoryRepository {
                  PreparedStatement preparedStatement1=connection.prepareStatement(sql1);
                  preparedStatement1.setString(1,resultSet.getString("parentcategory"));
                  ResultSet resultSet1=preparedStatement1.executeQuery();
-                 Category category1=new Category();category1.setId(resultSet1.getInt("id"));
+                 Category category1=new Category();
+                 category1.setId(resultSet1.getInt("id"));
                  category=new Category(resultSet.getString("name"),category1);
                  category.setId(resultSet.getInt("id"));
                  categories.add(category);
