@@ -14,8 +14,6 @@ import java.util.List;
 
 public class AdminRepositoryImpl implements AdminRepository {
     Connection connection= PostgresConnection.getInstance().getConnection();
-
-
     @Override
     public Integer findByUsernameAndPassword(Admin admin) {
         String sql="SELECT id from admins where username=? and password=? ";
