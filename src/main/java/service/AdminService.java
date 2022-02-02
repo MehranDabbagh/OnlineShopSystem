@@ -3,13 +3,12 @@ package service;
 import entity.Admin;
 import entity.Product;
 
+import java.util.List;
 import java.util.Set;
 
-public interface AdminService extends Service {
-    void findByUsernameAndPassword(Admin admin);
-    Integer saveProduct(Product product);
-    void updateProduct(Product product);
-   void findAllProduct();
+public interface AdminService extends Service<Admin,Integer> {
+    Integer findByUsernameAndPassword(Admin admin);
+
 
 
 }

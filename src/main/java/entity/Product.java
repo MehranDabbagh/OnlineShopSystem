@@ -4,14 +4,23 @@ public class Product extends BaseEntity {
     private String name;
     private int price;
     private Category category;
-
+    private int stock;
     public Product() {
     }
 
-    public Product(String name, int price, Category category) {
+    public Product(String name, int price,int stock, Category category) {
         this.name = name;
         this.price = price;
         this.category = category;
+        this.stock=stock;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public String getName() {

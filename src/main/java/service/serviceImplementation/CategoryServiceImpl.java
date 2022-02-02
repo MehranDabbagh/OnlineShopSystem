@@ -4,24 +4,29 @@ import entity.Category;
 import repository.jdbc.CategoryRepositoryImpl;
 import service.CategoryService;
 
+import java.util.List;
+
 public class CategoryServiceImpl  implements CategoryService {
     private  CategoryRepositoryImpl categoryRepository=new CategoryRepositoryImpl() ;
     public void CategoryServiceImpl(CategoryRepositoryImpl categoryRepository) {
       this.categoryRepository=categoryRepository;
     }
 
-    @Override
-    public void findAll() {
 
+    @Override
+    public List<Category> findAll() {
+       return categoryRepository.findAll();
     }
 
     @Override
-    public void findAllChildes(Category category) {
-
+    public List<Category> findAllChildes(Category category) {
+        return categoryRepository.findAllChildes(category);
     }
 
+
+
     @Override
-    public Object save(Object entity) {
-        return null;
+    public Integer save(Category entity) {
+     return categoryRepository.save(entity);
     }
 }

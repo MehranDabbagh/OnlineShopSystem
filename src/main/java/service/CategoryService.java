@@ -2,7 +2,10 @@ package service;
 
 import entity.Category;
 
-public interface CategoryService extends Service{
-    void findAll();
-    void findAllChildes(Category category);
+import java.util.List;
+
+public interface CategoryService extends Service<Category,Integer>{
+    List<Category> findAll();
+    List<Category> findAllChildes(Category category);
+
 }

@@ -1,5 +1,6 @@
 package service.serviceImplementation;
 
+import entity.Cart;
 import repository.jdbc.CartRepositoryImpl;
 import service.CartService;
 
@@ -8,8 +9,9 @@ public class CartServiceImpl implements CartService {
     public void CartServiceImpl(CartRepositoryImpl repository) {
         this.cartRepository=repository;
     }
+
     @Override
-    public Object save(Object entity) {
-        return null;
+    public Integer save(Cart entity) {
+      return   cartRepository.save(entity);
     }
 }

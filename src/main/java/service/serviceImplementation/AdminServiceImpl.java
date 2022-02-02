@@ -8,38 +8,26 @@ import service.AdminService;
 import service.CategoryService;
 import service.ProductService;
 
+import java.util.List;
+
 public class AdminServiceImpl implements AdminService {
-    private  AdminRepositoryImpl repository=new AdminRepositoryImpl();
+    private  AdminRepositoryImpl adminRepository=new AdminRepositoryImpl();
     private ProductService productService;
     private CategoryService categoryService;
-    public void AdminServiceImpl(AdminRepositoryImpl repository, ProductService productService, CategoryService categoryService) {
-        this.repository=repository;
+    public void AdminServiceImpl(AdminRepositoryImpl adminRepository, ProductService productService, CategoryService categoryService) {
+        this.adminRepository=adminRepository;
         this.productService=productService;
         this.categoryService=categoryService;
     }
 
     @Override
-    public void findByUsernameAndPassword(Admin admin) {
+    public Integer findByUsernameAndPassword(Admin admin) {
+    return    adminRepository.findByUsernameAndPassword(admin);
 
     }
 
     @Override
-    public Integer saveProduct(Product product) {
-        return null;
-    }
-
-    @Override
-    public void updateProduct(Product product) {
-
-    }
-
-    @Override
-    public void findAllProduct() {
-
-    }
-
-    @Override
-    public Object save(Object entity) {
-        return null;
+    public Integer save(Admin entity) {
+        return   adminRepository.save(entity);
     }
 }

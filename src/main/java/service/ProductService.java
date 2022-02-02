@@ -3,20 +3,12 @@ package service;
 import entity.Category;
 import entity.Product;
 
+import java.util.List;
 import java.util.Set;
 
-public interface ProductService extends Service{
+public interface ProductService extends Service<Product,Integer>{
 
     void update(Product product);
-
-    /**
-     * @return
-     */
-    void findAll();
-
-    /**
-     * @param category
-     * @return
-     */
-    void findAllByCategory(Category category);
+    List<Product> findAll();
+    List<Product> findAllByCategory(Category category);
 }
