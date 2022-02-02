@@ -29,6 +29,7 @@ public class Main {
                 }
             }catch (InputMismatchException e){
                 System.out.println("please enter a number!");
+                input.nextLine();
             }catch (OutOfRange e){
                 System.out.println(e.getMessage());
             }
@@ -50,6 +51,7 @@ public class Main {
                 }
             }catch (InputMismatchException e){
                 System.out.println("please enter a number!");
+                input.nextLine();
             }catch (OutOfRange e){
                 System.out.println(e.getMessage());
             }
@@ -70,6 +72,7 @@ public class Main {
             }
         }catch (InputMismatchException e){
             System.out.println("there is no acc with this username and password!");
+            input.nextLine();
         }
     }
     public static void loggedInAdmin(){
@@ -89,18 +92,25 @@ public class Main {
                 }
             }catch (InputMismatchException e){
                 System.out.println("please enter a number!");
+                input.nextLine();
             }catch (OutOfRange e){
                 System.out.println(e.getMessage());
             }
         }
     }
     public static void makingNewAdmin(){
-        System.out.println("please enter username:");
-        String username=input.next();
-        System.out.println("please enter password:");
-        String password=input.next();
-        Admin admin=new Admin(username,password);
-        System.out.println("your id is:"+adminService.save(admin));
+        try {
+            System.out.println("please enter username:");
+            String username = input.next();
+            System.out.println("please enter password:");
+            String password = input.next();
+            Admin admin = new Admin(username, password);
+            System.out.println("your id is:" + adminService.save(admin));
+        }catch (InputMismatchException e){
+            input.nextLine();
+        }catch (NullPointerException e){
+
+        }
     }
     public static void addingProduct(){
         boolean condition=true;
@@ -118,6 +128,7 @@ public class Main {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("please enter a number!");
+                input.nextLine();
             }catch (OutOfRange e){
                 System.out.println(e.getMessage());
             }
@@ -132,15 +143,14 @@ public class Main {
             Integer price=input.nextInt();
             System.out.println("please enter the amount:");
             Integer amount=input.nextInt();
-
             Product product=new Product(name,price,amount,category);
-
             Integer id=productService.save(product);
             if(id>0){
                 System.out.println("id of the product:"+id);
             }else {System.out.println("something wrong!");}
         }catch (InputMismatchException e){
             System.out.println("please enter a number!");
+            input.nextLine();
         }
     }
     public static Category choosingCategory(){
@@ -161,6 +171,7 @@ try
 
      }catch (InputMismatchException e){
     System.out.println("please enter a number!");
+    input.nextLine();
       }
         }
 return null;
@@ -200,6 +211,7 @@ return null;
             }
         }catch (InputMismatchException e){
             System.out.println("please enter a number!");
+            input.nextLine();
         }
         System.out.println("wrong id for parent! try again!");
         return null;
@@ -222,8 +234,9 @@ return null;
             }
         }catch (InputMismatchException e){
             System.out.println("please enter a number!");
+            input.nextLine();
         }
-        System.out.println("wrong id!");
+        System.out.println("there is no category with this id!");
         return null;
     }
     public static void addingFromCurrentProduct(){
@@ -247,6 +260,7 @@ return null;
            System.out.println("there is no product with this id!");
         }catch (InputMismatchException e){
             System.out.println("please enter a number!");
+            input.nextLine();
         }
     }
     public static void customerMenu(){
@@ -264,7 +278,8 @@ return null;
               case 3:condition=false;break;
           }
       }catch (InputMismatchException e){
-
+          System.out.println("please enter a number!");
+          input.nextLine();
       }catch (OutOfRange e){
           System.out.println(e.getMessage());
       }
@@ -286,8 +301,9 @@ return null;
         }
         }catch (InputMismatchException e){
             System.out.println("wrong format!");
+            input.nextLine();
         }catch (NullPointerException e){
-          e.printStackTrace();
+            System.out.println("wrong username and password!");
         }
     }
     public static void customerRegister(){
@@ -323,6 +339,9 @@ return null;
             System.out.println("1-adding product to your cart"+"\n"+"2-deleting product from your cart"+"\n"+"3-submit your cart"+"\n"+"4-showing your cart"+"\n"+"5-exit");
         try{
             Integer operator=input.nextInt();
+            if(operator>5 || operator<1){
+                throw new OutOfRange("please enter something in range!");
+            }
             switch (operator){
                 case 1:customer1=addingProductToCart(customer); break;
                 case 2:Cart cart=customer.getCart();
@@ -339,11 +358,16 @@ return null;
           }catch (InputMismatchException e){
             System.out.println("please enter a number!");
             input.nextLine();
-          }
+          }catch (OutOfRange e){
+            System.out.println(e.getMessage());
+        }catch (NullPointerException e){
+
+        }
         }
 
     }
     public static Customer addingProductToCart(Customer customer){
+        try{
     Category category= selectingFromCurrentCategory();
         System.out.println(category.getId());
     List<Product> products=productService.findAllByCategory(category);
@@ -352,7 +376,7 @@ return null;
             System.out.println("id:"+product.getId()+" name:"+product.getName()+" price:"+product.getPrice()+" stock:"+product.getStock()+" category:"+product.getCategory().getId());
         }
         System.out.println("please enter id of the product:");
-        try{
+
             Integer productId=input.nextInt();
             for (Product product:products
                  ) {
@@ -373,7 +397,11 @@ return null;
                 }
             }
             System.out.println("there is no product with this id!");
-        }catch (InputMismatchException e){}
+        }catch (InputMismatchException e){
+            System.out.println("please enter a number!");input.nextLine();
+        }catch (NullPointerException e){
+
+        }
         return customer;
     }
     public static Customer deletingProductFromCart(Customer customer){
@@ -407,6 +435,7 @@ return null;
         return customer;
     }
     public static void submitCart(Customer customer){
+        try{
         System.out.println("please enter your address:");
         String address= input.next();
         System.out.println("please enter your phone number:");
@@ -433,6 +462,10 @@ return null;
                     counter=0;
                 }
             }
+        }
+        }catch (InputMismatchException e){
+            System.out.println("please enter a number!");
+            input.nextLine();
         }
         customerService.saveCart(customer.getCart());
 
