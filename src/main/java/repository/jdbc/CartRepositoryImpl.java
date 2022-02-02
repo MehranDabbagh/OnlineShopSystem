@@ -135,7 +135,7 @@ public class CartRepositoryImpl implements CartRepository {
                         }
                     }
                 }
-            };
+            }
 
         }catch (SQLException e){
             e.printStackTrace();

@@ -428,7 +428,7 @@ return null;
                 if(counter>product1.getStock()){
                     System.out.println("there is not enough in the stock");
                     System.out.println(product1.getName()+" in stock:"+product1.getStock()+" your order:"+counter);
-
+                    return;
                 }else {
                     counter=0;
                 }
