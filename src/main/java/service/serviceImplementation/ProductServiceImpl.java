@@ -26,19 +26,7 @@ productRepository.update(product);
         return productRepository.findAll();
     }
 
-    @Override
-    public List<Product> findAllByCategory(Category category) {
-        List<Product> products=productRepository.findAll();
-        List<Product> finalList=new ArrayList<>();
-        for (Product product:products
-             ) {
 
-           if(Objects.equals(product.getCategory().getId(), category.getId())){
-               finalList.add(product);
-           }
-        }
-        return finalList;
-    }
 
     @Override
     public List<Product> findAllProductByCategory(Category category) {
