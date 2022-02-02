@@ -361,7 +361,7 @@ return null;
           }catch (OutOfRange e){
             System.out.println(e.getMessage());
         }catch (NullPointerException e){
-
+            System.out.println("you do not have a cart yet !");
         }
         }
 
