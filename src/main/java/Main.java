@@ -348,7 +348,8 @@ return null;
                 cart.setProductList(cartProductList);
                 customer.setCart(cart);
                customer1= deletingProductFromCart(customer);break;
-                case 3:submitCart(customer);cartProductList=new ArrayList<>();break;
+                case 3:submitCart(customer);cartProductList=new ArrayList<>();Cart cart1=customer.getCart();cart1.setProductList(new ArrayList<>());customer.setCart(cart1);
+                ;break;
                 case 4:showingCart(cartProductList);break;
                 case 5:condition=false;break;
             }
@@ -369,7 +370,6 @@ return null;
     public static Customer addingProductToCart(Customer customer){
         try{
     Category category= selectingFromCurrentCategory();
-        System.out.println(category.getId());
     List<Product> products=productService.findAllByCategory(category);
         for (Product product:products
              ) {
