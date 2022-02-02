@@ -1,17 +1,26 @@
 import CustomException.OutOfRange;
+import connection.PostgresConnection;
 import entity.*;
+import repository.jdbc.*;
 import service.AdminService;
 import service.serviceImplementation.*;
 
+import java.sql.Connection;
 import java.util.*;
 
 public class Main {
   static Scanner input=new Scanner(System.in);
-  static AdminServiceImpl adminService=new AdminServiceImpl();
-  static CategoryServiceImpl categoryService=new CategoryServiceImpl();
-  static ProductServiceImpl productService=new ProductServiceImpl();
-  static CustomerServiceImpl customerService=new CustomerServiceImpl();
-  static CartServiceImpl cartService=new CartServiceImpl();
+  static Connection connection= PostgresConnection.getInstance().getConnection();
+  static AdminRepositoryImpl adminRepository=new AdminRepositoryImpl(connection);
+  static CartRepositoryImpl cartRepository=new CartRepositoryImpl(connection);
+  static CategoryRepositoryImpl categoryRepository=new CategoryRepositoryImpl(connection);
+  static CustomerRepositoryImpl customerRepository=new CustomerRepositoryImpl(connection);
+  static ProductRepositoryImpl productRepository=new ProductRepositoryImpl(connection);
+  static AdminServiceImpl adminService=new AdminServiceImpl(adminRepository);
+  static CategoryServiceImpl categoryService=new CategoryServiceImpl(categoryRepository);
+  static ProductServiceImpl productService=new ProductServiceImpl(productRepository);
+  static CustomerServiceImpl customerService=new CustomerServiceImpl(customerRepository);
+  static CartServiceImpl cartService=new CartServiceImpl(cartRepository);
   static List<Product> cartProductList=new ArrayList<>();
     public static void main(String[] args) {
         boolean condition=true;

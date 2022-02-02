@@ -13,7 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryRepositoryImpl implements CategoryRepository {
-    Connection connection= PostgresConnection.getInstance().getConnection();
+    Connection connection;
+
+    public CategoryRepositoryImpl(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public List<Category> findAllChildes(Category category) {
         String sql="WITH RECURSIVE q AS (\n" +

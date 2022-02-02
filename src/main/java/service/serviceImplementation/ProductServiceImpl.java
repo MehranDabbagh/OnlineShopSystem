@@ -12,14 +12,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class ProductServiceImpl  implements ProductService {
-    private ProductRepositoryImpl productRepository=new ProductRepositoryImpl();
+    private ProductRepositoryImpl productRepository;
     public ProductServiceImpl(ProductRepositoryImpl productRepository) {
         this.productRepository = productRepository;
-
-    }
-
-    public ProductServiceImpl() {
-
     }
     @Override
     public void update(Product product) {

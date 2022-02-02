@@ -11,9 +11,11 @@ import service.ProductService;
 import java.util.List;
 
 public class AdminServiceImpl implements AdminService {
-    private  AdminRepositoryImpl adminRepository=new AdminRepositoryImpl();
+    private  AdminRepositoryImpl adminRepository;
 
-    public void AdminServiceImpl(AdminRepositoryImpl adminRepository) {
+
+
+    public  AdminServiceImpl(AdminRepositoryImpl adminRepository) {
         this.adminRepository=adminRepository;
     }
 

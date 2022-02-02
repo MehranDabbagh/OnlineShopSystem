@@ -7,8 +7,8 @@ import service.CategoryService;
 import java.util.List;
 
 public class CategoryServiceImpl  implements CategoryService {
-    private  CategoryRepositoryImpl categoryRepository=new CategoryRepositoryImpl() ;
-    public void CategoryServiceImpl(CategoryRepositoryImpl categoryRepository) {
+    private  CategoryRepositoryImpl categoryRepository ;
+    public  CategoryServiceImpl(CategoryRepositoryImpl categoryRepository) {
       this.categoryRepository=categoryRepository;
     }
     @Override

@@ -14,7 +14,12 @@ import java.util.List;
 
 public class CustomerRepositoryImpl implements CustomerRepository {
 
-    Connection connection= PostgresConnection.getInstance().getConnection();
+    Connection connection;
+
+    public CustomerRepositoryImpl(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public List<Customer> findAll() {
         String sql="SELECT * from customer ";

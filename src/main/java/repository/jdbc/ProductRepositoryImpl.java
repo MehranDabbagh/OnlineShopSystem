@@ -14,7 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductRepositoryImpl implements ProductRepository {
-    Connection connection= PostgresConnection.getInstance().getConnection();
+    Connection connection;
+
+    public ProductRepositoryImpl(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public List<Product> findAll() {
         String sql="SELECT * from products ";

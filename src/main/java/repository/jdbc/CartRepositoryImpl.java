@@ -15,7 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CartRepositoryImpl implements CartRepository {
-    Connection connection= PostgresConnection.getInstance().getConnection();
+    Connection connection;
+
+    public CartRepositoryImpl(Connection connection) {
+        this.connection = connection;
+    }
 
     @Override
     public List<Cart> findAll() {

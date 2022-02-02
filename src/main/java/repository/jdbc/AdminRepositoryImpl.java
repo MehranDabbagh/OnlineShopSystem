@@ -13,7 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminRepositoryImpl implements AdminRepository {
-    Connection connection= PostgresConnection.getInstance().getConnection();
+    Connection connection;
+
+    public AdminRepositoryImpl(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public Integer findByUsernameAndPassword(Admin admin) {
         String sql="SELECT id from admins where username=? and password=? ";

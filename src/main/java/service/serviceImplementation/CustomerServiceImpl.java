@@ -14,9 +14,9 @@ import service.ProductService;
 import java.util.List;
 
 public class CustomerServiceImpl  implements CustomerService {
-    private CustomerRepositoryImpl customerRepository=new CustomerRepositoryImpl();
+    private CustomerRepositoryImpl customerRepository;
 
-    public void CustomerServiceImpl(CustomerRepositoryImpl customerRepository) {
+    public  CustomerServiceImpl(CustomerRepositoryImpl customerRepository) {
        this.customerRepository=customerRepository;
     }
 
