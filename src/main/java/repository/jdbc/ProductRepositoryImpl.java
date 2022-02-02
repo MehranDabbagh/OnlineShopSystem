@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ProductRepositoryImpl implements ProductRepository {
     Connection connection;
@@ -128,28 +129,41 @@ e.printStackTrace();
 
     @Override
     public List<Product> findAllProductByCategory(Category category) {
+
         String sql="WITH RECURSIVE q AS (\n" +
-                "        SELECT  *\n" +
+                "        SELECT  * \n" +
                 "        FROM    category \n" +
                 "        WHERE   parentcategoryid = ? -- this condition defines the ultimate ancestors in your chain, change it as appropriate\n" +
                 "        UNION ALL\n" +
-                "        SELECT  m.*\n" +
-                "        FROM    category m\n" +
-                "        JOIN    q\n" +
-                "        ON      m.parent_ID = q.id\n" +
+                "        SELECT  m.* \n" +
+                "        FROM    category m \n" +
+                "        JOIN    q \n" +
+                "        ON      m.parentcategoryid = q.id\n" +
                 "        )\n" +
                 "SELECT  *\n" +
                 "FROM    q;";
         List<Category> categories=new ArrayList<>();
         try{
             PreparedStatement preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setInt(1,category.getParentCategory().getId());
+            preparedStatement.setInt(1,category.getId());
             ResultSet resultSet=preparedStatement.executeQuery();
             while(resultSet.next()){
                 Category category1=new Category();category1.setId(resultSet.getInt("id"));
-                Category  category2=new Category(resultSet.getString("name"),category1);
-                category.setId(resultSet.getInt("id"));
+                Category  category2=new Category(resultSet.getString("label"),category1);
+                category2.setId(resultSet.getInt("id"));
                 categories.add(category2);
+            }
+             sql="select * from category where id=?";
+            PreparedStatement preparedStatement1=connection.prepareStatement(sql);
+            preparedStatement1.setInt(1,category.getId());
+            ResultSet  resultSet1=preparedStatement1.executeQuery();
+            while(resultSet1.next()){
+                Category category1=new Category();
+                category1.setId(resultSet1.getInt("id"));
+                Category  category2=new Category(resultSet1.getString("label"),category1);
+                category2.setId(resultSet1.getInt("id"));
+                categories.add(category2);
+
             }
         List<Product> products=findAll();
         List<Product> finalProducts=new ArrayList<>();
@@ -157,7 +171,7 @@ e.printStackTrace();
                  ) {
                 for (Category category1:categories
                      ) {
-                    if(product.getCategory()==category1){
+                    if(Objects.equals(product.getCategory().getId(), category1.getId())){
                         finalProducts.add(product);
                     }
                 }

@@ -41,6 +41,11 @@ productRepository.update(product);
     }
 
     @Override
+    public List<Product> findAllProductByCategory(Category category) {
+        return productRepository.findAllProductByCategory(category);
+    }
+
+    @Override
     public Integer save(Product entity) {
 
         return productRepository.save(entity);

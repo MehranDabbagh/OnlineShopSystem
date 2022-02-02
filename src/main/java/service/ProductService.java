@@ -11,4 +11,5 @@ public interface ProductService extends Service<Product,Integer>{
     void update(Product product);
     List<Product> findAll();
     List<Product> findAllByCategory(Category category);
+    List<Product> findAllProductByCategory(Category category);
 }

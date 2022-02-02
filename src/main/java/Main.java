@@ -379,7 +379,7 @@ return null;
     public static Customer addingProductToCart(Customer customer){
         try{
     Category category= selectingFromCurrentCategory();
-    List<Product> products=productService.findAllByCategory(category);
+    List<Product> products=productService.findAllProductByCategory(category);
         for (Product product:products
              ) {
             System.out.println("id:"+product.getId()+" name:"+product.getName()+" price:"+product.getPrice()+" stock:"+product.getStock()+" category:"+product.getCategory().getId());
