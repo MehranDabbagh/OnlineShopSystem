@@ -1,15 +1,11 @@
-package service.serviceImplementation;
+package service.impl;
 
 import entity.Category;
 import entity.Product;
-import repository.jdbc.CategoryRepositoryImpl;
-import repository.jdbc.ProductRepositoryImpl;
-import service.CategoryService;
+import repository.impl.ProductRepositoryImpl;
 import service.ProductService;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ProductServiceImpl  implements ProductService {
     private ProductRepositoryImpl productRepository;
@@ -25,8 +21,6 @@ productRepository.update(product);
     public List<Product> findAll() {
         return productRepository.findAll();
     }
-
-
 
     @Override
     public List<Product> findAllProductByCategory(Category category) {

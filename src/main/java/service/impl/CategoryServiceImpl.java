@@ -1,7 +1,7 @@
-package service.serviceImplementation;
+package service.impl;
 
 import entity.Category;
-import repository.jdbc.CategoryRepositoryImpl;
+import repository.impl.CategoryRepositoryImpl;
 import service.CategoryService;
 
 import java.util.List;

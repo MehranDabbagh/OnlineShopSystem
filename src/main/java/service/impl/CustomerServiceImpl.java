@@ -1,17 +1,8 @@
-package service.serviceImplementation;
+package service.impl;
 
-import entity.Cart;
-import entity.Category;
 import entity.Customer;
-import entity.Product;
-import repository.jdbc.CartRepositoryImpl;
-import repository.jdbc.CustomerRepositoryImpl;
-import service.CartService;
-import service.CategoryService;
+import repository.impl.CustomerRepositoryImpl;
 import service.CustomerService;
-import service.ProductService;
-
-import java.util.List;
 
 public class CustomerServiceImpl  implements CustomerService {
     private CustomerRepositoryImpl customerRepository;

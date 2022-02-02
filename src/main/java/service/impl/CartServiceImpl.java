@@ -1,7 +1,7 @@
-package service.serviceImplementation;
+package service.impl;
 
 import entity.Cart;
-import repository.jdbc.CartRepositoryImpl;
+import repository.impl.CartRepositoryImpl;
 import service.CartService;
 
 public class CartServiceImpl implements CartService {

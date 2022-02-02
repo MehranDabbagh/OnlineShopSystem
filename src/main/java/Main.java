@@ -1,9 +1,8 @@
 import CustomException.OutOfRange;
 import connection.PostgresConnection;
 import entity.*;
-import repository.jdbc.*;
-import service.AdminService;
-import service.serviceImplementation.*;
+import repository.impl.*;
+import service.impl.*;
 
 import java.sql.Connection;
 import java.util.*;

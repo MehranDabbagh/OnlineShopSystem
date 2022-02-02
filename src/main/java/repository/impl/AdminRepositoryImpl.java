@@ -1,10 +1,8 @@
-package repository.jdbc;
+package repository.impl;
 
-import connection.PostgresConnection;
 import entity.Admin;
 import repository.AdminRepository;
 
-import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

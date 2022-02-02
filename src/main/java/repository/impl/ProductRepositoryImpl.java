@@ -1,7 +1,5 @@
-package repository.jdbc;
+package repository.impl;
 
-import connection.PostgresConnection;
-import entity.Admin;
 import entity.Category;
 import entity.Product;
 import repository.ProductRepository;

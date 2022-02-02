@@ -1,14 +1,8 @@
-package service.serviceImplementation;
+package service.impl;
 
 import entity.Admin;
-import entity.Product;
-import repository.AdminRepository;
-import repository.jdbc.AdminRepositoryImpl;
+import repository.impl.AdminRepositoryImpl;
 import service.AdminService;
-import service.CategoryService;
-import service.ProductService;
-
-import java.util.List;
 
 public class AdminServiceImpl implements AdminService {
     private  AdminRepositoryImpl adminRepository;
