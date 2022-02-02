@@ -132,8 +132,6 @@ public class CartRepositoryImpl implements CartRepository {
                             preparedStatement3.setInt(1, resultSet1.getInt("stock") - 1);
                             preparedStatement3.setInt(2, product.getId());
                             preparedStatement3.execute();
-                        } else {
-                            System.out.println("not enough in stock!");
                         }
                     }
                 }

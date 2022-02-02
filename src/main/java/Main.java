@@ -329,7 +329,7 @@ return null;
                 cart.setProductList(cartProductList);
                 customer.setCart(cart);
                customer1= deletingProductFromCart(customer);break;
-                case 3:submitCart(customer);break;
+                case 3:submitCart(customer);cartProductList=new ArrayList<>();break;
                 case 4:showingCart(cartProductList);break;
                 case 5:condition=false;break;
             }
@@ -416,7 +416,26 @@ return null;
         cart.setPhoneNumber(phoneNumber);
         cart.setDone(true);
         customer.setCart(cart);
+      List<Product> products=  productService.findAll();
+      int counter=0;
+        for (Product product1:products
+             ) {
+            for (Product product2:customer.getCart().getProductList()
+                 ) {
+                if(Objects.equals(product2.getId(), product1.getId())){
+                    counter++;
+                }
+                if(counter>product1.getStock()){
+                    System.out.println("there is not enough in the stock");
+                    System.out.println(product1.getName()+" in stock:"+product1.getStock()+" your order:"+counter);
+
+                }else {
+                    counter=0;
+                }
+            }
+        }
         customerService.saveCart(customer.getCart());
+
     }
     public static void showingCart(List<Product> cartProductList){
         Integer totalPrice=0;
