@@ -467,7 +467,7 @@ return null;
             System.out.println("please enter a number!");
             input.nextLine();
         }
-        cartService.save(customer.getCart());
+        cartService.update(customer.getCart());
 
     }
     public static void showingCart(List<Product> cartProductList){

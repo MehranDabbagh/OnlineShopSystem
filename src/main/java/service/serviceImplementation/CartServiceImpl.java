@@ -14,4 +14,9 @@ public class CartServiceImpl implements CartService {
     public Integer save(Cart entity) {
       return   cartRepository.save(entity);
     }
+
+    @Override
+    public void update(Cart cart) {
+        cartRepository.update(cart);
+    }
 }
