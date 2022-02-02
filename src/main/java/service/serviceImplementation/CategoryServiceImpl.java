@@ -11,8 +11,6 @@ public class CategoryServiceImpl  implements CategoryService {
     public void CategoryServiceImpl(CategoryRepositoryImpl categoryRepository) {
       this.categoryRepository=categoryRepository;
     }
-
-
     @Override
     public List<Category> findAll() {
        return categoryRepository.findAll();
@@ -22,9 +20,6 @@ public class CategoryServiceImpl  implements CategoryService {
     public List<Category> findAllChildes(Category category) {
         return categoryRepository.findAllChildes(category);
     }
-
-
-
     @Override
     public Integer save(Category entity) {
      return categoryRepository.save(entity);

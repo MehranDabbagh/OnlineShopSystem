@@ -15,35 +15,14 @@ import java.util.List;
 
 public class CustomerServiceImpl  implements CustomerService {
     private CustomerRepositoryImpl customerRepository=new CustomerRepositoryImpl();
-    private CartRepositoryImpl cartRepository=new CartRepositoryImpl();
-    private ProductService productService;
-    private CategoryService categoryService;
-    public void CustomerServiceImpl(CustomerRepositoryImpl customerRepository, CartRepositoryImpl cartRepository, ProductService productService, CategoryService categoryService) {
+
+    public void CustomerServiceImpl(CustomerRepositoryImpl customerRepository) {
        this.customerRepository=customerRepository;
-       this.cartRepository=cartRepository;
-       this.productService=productService;
-       this.categoryService=categoryService;
     }
 
     @Override
     public Customer findByUsernameAndPassword(Customer customer) {
       return customerRepository.findByUsernameAndPassword(customer);
-    }
-
-    @Override
-    public List<Category> findAllCategories() {
-       return categoryService.findAll();
-    }
-
-    @Override
-    public List<Product> findAllProductsByCategory(Category category) {
-       return productService.findAllByCategory(category);
-    }
-
-    @Override
-    public Integer saveCart(Cart cart) {
-         cartRepository.update(cart);
-         return 0;
     }
 
     @Override

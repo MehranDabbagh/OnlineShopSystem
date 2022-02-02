@@ -12,19 +12,14 @@ import java.util.List;
 
 public class AdminServiceImpl implements AdminService {
     private  AdminRepositoryImpl adminRepository=new AdminRepositoryImpl();
-    private ProductService productService;
-    private CategoryService categoryService;
-    public void AdminServiceImpl(AdminRepositoryImpl adminRepository, ProductService productService, CategoryService categoryService) {
+
+    public void AdminServiceImpl(AdminRepositoryImpl adminRepository) {
         this.adminRepository=adminRepository;
-        this.productService=productService;
-        this.categoryService=categoryService;
     }
 
     @Override
     public Integer findByUsernameAndPassword(Admin admin) {
-    return    adminRepository.findByUsernameAndPassword(admin);
-
-    }
+    return    adminRepository.findByUsernameAndPassword(admin);}
 
     @Override
     public Integer save(Admin entity) {

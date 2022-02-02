@@ -13,13 +13,9 @@ import java.util.Objects;
 
 public class ProductServiceImpl  implements ProductService {
     private ProductRepositoryImpl productRepository=new ProductRepositoryImpl();
-    private CategoryService categoryService;
-    private CategoryRepositoryImpl categoryRepository=new CategoryRepositoryImpl();
-
-    public ProductServiceImpl(ProductRepositoryImpl productRepository, CategoryService categoryService, CategoryRepositoryImpl categoryRepository) {
+    public ProductServiceImpl(ProductRepositoryImpl productRepository) {
         this.productRepository = productRepository;
-        this.categoryService = categoryService;
-        this.categoryRepository = categoryRepository;
+
     }
 
     public ProductServiceImpl() {
@@ -37,17 +33,16 @@ productRepository.update(product);
 
     @Override
     public List<Product> findAllByCategory(Category category) {
-
         List<Product> products=productRepository.findAll();
-        List<Product> finallist=new ArrayList<>();
+        List<Product> finalList=new ArrayList<>();
         for (Product product:products
              ) {
-           Category category1=categoryRepository.findById(product.getCategory().getId());
-           if(Objects.equals(category1.getId(), category.getId())){
-               finallist.add(product);
+
+           if(Objects.equals(product.getCategory().getId(), category.getId())){
+               finalList.add(product);
            }
         }
-        return finallist;
+        return finalList;
     }
 
     @Override
