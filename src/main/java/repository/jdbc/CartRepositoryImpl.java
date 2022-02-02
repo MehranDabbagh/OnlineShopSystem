@@ -4,6 +4,7 @@ import connection.PostgresConnection;
 import entity.Admin;
 import entity.Cart;
 import entity.Customer;
+import entity.Product;
 import repository.CartRepository;
 
 import java.sql.Connection;
@@ -76,6 +77,15 @@ public class CartRepositoryImpl implements CartRepository {
             preparedStatement.setBoolean(3,false);
             preparedStatement.setInt(4,entity.getCostumer().getId());
             ResultSet resultSet=preparedStatement.executeQuery();
+            if(entity.getProductList()!=null && resultSet.next()) {
+                for (Product product : entity.getProductList()) {
+                    String insert = "insert into cartproducts (cartid,productid) values (?,?)";
+                    PreparedStatement preparedStatement1 = connection.prepareStatement(insert);
+                    preparedStatement1.setInt(1, resultSet.getInt("id"));
+                    preparedStatement1.setInt(2, product.getId());
+                    preparedStatement1.execute();
+                }
+            }
             if(resultSet.next()){
                 return  resultSet.getInt("id");
             }return 0;
@@ -92,6 +102,7 @@ public class CartRepositoryImpl implements CartRepository {
             PreparedStatement preparedStatement=connection.prepareStatement(sql);
             preparedStatement.setInt(1,entity.getId());
             ResultSet resultSet=preparedStatement.executeQuery();
+            Integer updateCount=0;
             if(resultSet.next()){
                 String sql1="update cart set address=? ,phonenumber=?,done=? ,customerid=? where id=?";
                 PreparedStatement preparedStatement1=connection.prepareStatement(sql1);
@@ -99,8 +110,34 @@ public class CartRepositoryImpl implements CartRepository {
                 preparedStatement1.setLong(2,entity.getPhoneNumber());
                 preparedStatement1.setBoolean(3,entity.isDone());
                 preparedStatement1.setInt(4,entity.getCostumer().getId());
-                preparedStatement1.executeUpdate();
+                preparedStatement1.setInt(5,entity.getId());
+               updateCount= preparedStatement1.executeUpdate();
             }
+         List<Product> products=entity.getProductList();
+            if(entity.getProductList()!=null ){
+                for (Product product:entity.getProductList()) {
+                    String selection="select stock from products where id=?";
+                    PreparedStatement preparedStatement2=connection.prepareStatement(selection);
+                    preparedStatement2.setInt(1,product.getId());
+                    ResultSet resultSet1=preparedStatement2.executeQuery();
+                    if(resultSet1.next()) {
+                        if (resultSet1.getInt("stock") > 0) {
+                            String insert = "insert into cartproducts (cartid,productid) values (?,?)";
+                            PreparedStatement preparedStatement1 = connection.prepareStatement(insert);
+                            preparedStatement1.setInt(1, entity.getId());
+                            preparedStatement1.setInt(2, product.getId());
+                            preparedStatement1.execute();
+                            String update = "update products set stock=? where id=?";
+                            PreparedStatement preparedStatement3 = connection.prepareStatement(update);
+                            preparedStatement3.setInt(1, resultSet1.getInt("stock") - 1);
+                            preparedStatement3.setInt(2, product.getId());
+                            preparedStatement3.execute();
+                        } else {
+                            System.out.println("not enough in stock!");
+                        }
+                    }
+                }
+            };
 
         }catch (SQLException e){
             e.printStackTrace();

@@ -12,6 +12,7 @@ public class Customer extends User {
     private Cart cart;
 
     public Customer() {
+
     }
 
     public Customer(String username, String password, String firstName, String lastName, Long nationalCode, String email, Long phoneNumber) {
