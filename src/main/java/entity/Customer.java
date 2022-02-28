@@ -1,75 +1,32 @@
 package entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Set;
-
-public class Customer extends User {
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
+public class Customer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String username;
+    private String password;
     private String firstName;
     private String lastName;
     private Long nationalCode;
     private String email;
     private Long phoneNumber;
-    private Cart cart;
+    private Long cartId;
 
-    public Customer() {
 
-    }
-
-    public Customer(String username, String password, String firstName, String lastName, Long nationalCode, String email, Long phoneNumber) {
-        super(username, password);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.nationalCode = nationalCode;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Long getNationalCode() {
-        return nationalCode;
-    }
-
-    public void setNationalCode(Long nationalCode) {
-        this.nationalCode = nationalCode;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Long getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(Long phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
 }

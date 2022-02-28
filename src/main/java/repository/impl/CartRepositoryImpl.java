@@ -30,7 +30,7 @@ public class CartRepositoryImpl implements CartRepository {
             Customer customer;
             while(resultSet.next()){
              customer= new Customer();
-             customer.setId(resultSet.getInt("customerid"));
+             customer.setId(resultSet.getLong("customerid"));
             Cart cart=new Cart(resultSet.getString("address"),resultSet.getLong("phonenumber"),resultSet.getBoolean("done"),customer);
             cart.setId(resultSet.getInt("id"));
             carts.add(cart);
@@ -51,7 +51,7 @@ public class CartRepositoryImpl implements CartRepository {
             ResultSet resultSet=preparedStatement.executeQuery();
             if(resultSet.next()){
               Customer customer=new Customer();
-              customer.setId(resultSet.getInt("customerid"));
+              customer.setId(resultSet.getLong("customerid"));
                 Cart cart=new Cart(resultSet.getString("address"),resultSet.getLong("phonenumber"),resultSet.getBoolean("done"),customer);
                 cart.setId(id);
                 return cart;
@@ -70,14 +70,14 @@ public class CartRepositoryImpl implements CartRepository {
             preparedStatement.setString(1,entity.getAddress());
             preparedStatement.setLong(2,entity.getPhoneNumber());
             preparedStatement.setBoolean(3,entity.isDone());
-            preparedStatement.setInt(4,entity.getCostumer().getId());
+            preparedStatement.setLong(4,entity.getCostumer().getId());
             preparedStatement.executeUpdate();
             String sql1="select id from cart where address=? and phonenumber=?  and done=? and customerid=?";
             preparedStatement=connection.prepareStatement(sql1);
             preparedStatement.setString(1,entity.getAddress());
             preparedStatement.setLong(2,entity.getPhoneNumber());
             preparedStatement.setBoolean(3,false);
-            preparedStatement.setInt(4,entity.getCostumer().getId());
+            preparedStatement.setLong(4,entity.getCostumer().getId());
             ResultSet resultSet=preparedStatement.executeQuery();
             if(entity.getProductList()!=null && resultSet.next()) {
                 for (Product product : entity.getProductList()) {
@@ -111,7 +111,7 @@ public class CartRepositoryImpl implements CartRepository {
                 preparedStatement1.setString(1,entity.getAddress());
                 preparedStatement1.setLong(2,entity.getPhoneNumber());
                 preparedStatement1.setBoolean(3,entity.isDone());
-                preparedStatement1.setInt(4,entity.getCostumer().getId());
+                preparedStatement1.setLong(4,entity.getCostumer().getId());
                 preparedStatement1.setInt(5,entity.getId());
                updateCount= preparedStatement1.executeUpdate();
             }

@@ -8,7 +8,7 @@ import entity.Product;
 import java.util.List;
 import java.util.Set;
 
-public interface CustomerService extends Service<Customer,Integer>{
+public interface CustomerService extends Service<Customer,Long>{
     Customer findByUsernameAndPassword(Customer customer);
 
 }

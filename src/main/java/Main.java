@@ -13,7 +13,7 @@ public class Main {
   static AdminRepositoryImpl adminRepository=new AdminRepositoryImpl(connection);
   static CartRepositoryImpl cartRepository=new CartRepositoryImpl(connection);
   static CategoryRepositoryImpl categoryRepository=new CategoryRepositoryImpl(connection);
-  static CustomerRepositoryImpl customerRepository=new CustomerRepositoryImpl(connection);
+  static CustomerRepositoryImpl customerRepository=new CustomerRepositoryImpl();
   static ProductRepositoryImpl productRepository=new ProductRepositoryImpl(connection);
   static AdminServiceImpl adminService=new AdminServiceImpl(adminRepository);
   static CategoryServiceImpl categoryService=new CategoryServiceImpl(categoryRepository);
@@ -330,8 +330,8 @@ return null;
             String email=input.next();
             System.out.println("please enter your phone number");
             Long phoneNumber=input.nextLong();
-            Customer customer=new Customer(username,password,firstname,lastname,nationalCode,email,phoneNumber);
-        Integer id=   customerService.save(customer);
+            Customer customer=new Customer(0l,username,password,firstname,lastname,nationalCode,email,phoneNumber,0l);
+        Long id=   customerService.save(customer);
            if(id>0 && id!=null){
                System.out.println("your id is:"+id);
            }else System.out.println("something is wrong!");
@@ -352,16 +352,16 @@ return null;
             }
             switch (operator){
                 case 1:customer1=addingProductToCart(customer); break;
-                case 2:Cart cart=customer.getCart();
+                case 2:Cart cart=cartRepository.findById(Integer.valueOf(String.valueOf(customer.getCartId())));
                 cart.setProductList(cartProductList);
-                customer.setCart(cart);
+                customer.setCartId(Long.valueOf(String.valueOf(cart.getId())));
                customer1= deletingProductFromCart(customer);break;
-                case 3:submitCart(customer);cartProductList=new ArrayList<>();Cart cart1=customer.getCart();cart1.setProductList(new ArrayList<>());customer.setCart(cart1);
+                case 3:submitCart(customer);cartProductList=new ArrayList<>();Cart cart1=cartRepository.findById(Integer.valueOf(String.valueOf(customer.getCartId())));cart1.setProductList(new ArrayList<>());customer.setCartId(Long.valueOf(String.valueOf(cart1.getId())));
                 ;break;
                 case 4:showingCart(cartProductList);break;
                 case 5:condition=false;break;
             }
-            cartProductList=customer1.getCart().getProductList();
+            cartProductList=cartRepository.findById(Integer.valueOf(String.valueOf(customer.getCartId()))).getProductList();
             customer=customer1;
 
           }catch (InputMismatchException e){
@@ -389,18 +389,18 @@ return null;
             for (Product product:products
                  ) {
                 if(Objects.equals(product.getId(), productId)){
-                    if(customer.getCart()==null){
+                    if(customer.getCartId()==null){
                         Cart cart=new Cart();
                         cart.setCostumer(customer);
                         List<Product> productList=new ArrayList<>();
                         cart.setProductList(productList);
                        Integer cartId= cartService.save(cart);
                        cart.setId(cartId);
-                       customer.setCart(cart);
+                       customer.setCartId(Long.valueOf(String.valueOf(cart.getId())));
                     }
-                   List<Product> productList= customer.getCart().getProductList();
+                   List<Product> productList=cartRepository.findById(Integer.valueOf(String.valueOf(customer.getCartId()))).getProductList();
                    productList.add(product);
-                   customer.getCart().setProductList(productList);
+                    cartRepository.findById(Integer.valueOf(String.valueOf(customer.getCartId()))).setProductList(productList);
                    return customer;
                 }
             }
@@ -413,7 +413,7 @@ return null;
         return customer;
     }
     public static Customer deletingProductFromCart(Customer customer){
-      List<Product> products=customer.getCart().getProductList();
+      List<Product> products=cartRepository.findById(Integer.valueOf(String.valueOf(customer.getCartId()))).getProductList();
         for (Product product:products
              ) {
             System.out.println("id:"+product.getId());
@@ -427,10 +427,10 @@ return null;
 
                 if(Objects.equals(products.get(i).getId(), productId)){
                     products.remove(i);
-                   Cart cart=customer.getCart();
+                   Cart cart=cartRepository.findById(Integer.valueOf(String.valueOf(customer.getCartId())));
                    cart.setProductList(products);
-                   cart.setId(customer.getCart().getId());
-                   customer.setCart(cart);
+                   cart.setId(cartRepository.findById(Integer.valueOf(String.valueOf(customer.getCartId()))).getId());
+                   customer.setCartId(Long.valueOf(String.valueOf(cart.getId())));
                    return customer;
                 }
                 counter++;
@@ -448,16 +448,16 @@ return null;
         String address= input.next();
         System.out.println("please enter your phone number:");
         Long phoneNumber=input.nextLong();
-        Cart cart=customer.getCart();
+        Cart cart=cartRepository.findById(Integer.valueOf(String.valueOf(customer.getCartId())));
         cart.setAddress(address);
         cart.setPhoneNumber(phoneNumber);
         cart.setDone(true);
-        customer.setCart(cart);
+            customer.setCartId(Long.valueOf(String.valueOf(cart.getId())));
       List<Product> products=  productService.findAll();
       int counter=0;
         for (Product product1:products
              ) {
-            for (Product product2:customer.getCart().getProductList()
+            for (Product product2:cartRepository.findById(Integer.valueOf(String.valueOf(customer.getCartId()))).getProductList()
                  ) {
                 if(Objects.equals(product2.getId(), product1.getId())){
                     counter++;
@@ -475,7 +475,7 @@ return null;
             System.out.println("please enter a number!");
             input.nextLine();
         }
-        cartService.update(customer.getCart());
+        cartService.update(cartRepository.findById(Integer.valueOf(String.valueOf(customer.getCartId()))));
 
     }
     public static void showingCart(List<Product> cartProductList){

@@ -1,6 +1,11 @@
 package repository.impl;
 
+import connection.SessionFactorySingleton;
 import entity.Customer;
+import lombok.var;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import repository.CustomerRepository;
 
 import java.sql.Connection;
@@ -12,137 +17,76 @@ import java.util.List;
 
 public class CustomerRepositoryImpl implements CustomerRepository {
 
-    Connection connection;
-
-    public CustomerRepositoryImpl(Connection connection) {
-        this.connection = connection;
-    }
+    private SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
 
     @Override
     public List<Customer> findAll() {
-        String sql="SELECT * from customer ";
-        List<Customer> customers=new ArrayList<>();
-        try{
-            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+        Session session = sessionFactory.openSession();
+        Query q = session.createQuery("from Customer ");
+        List<Customer> customers = (List<Customer>) q.getResultList();
 
-            ResultSet resultSet=preparedStatement.executeQuery();
-            Customer customer;
-            while(resultSet.next()){
-       customer=new Customer(resultSet.getString("username"),resultSet.getString("password"),
-               resultSet.getString("firstname"),resultSet.getString("lastname"),
-               resultSet.getLong("nationalcode"),resultSet.getString("nationalcode"),
-               resultSet.getLong("phonenumber"));
-       customers.add(customer);
-            }
-            return customers;
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return null;
+        return customers;
     }
 
     @Override
-    public Customer findById(Integer id) {
-        String sql="select * from customer where id=?";
-        try {
-            PreparedStatement preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setInt(1,id);
-            ResultSet resultSet=preparedStatement.executeQuery();
-            if(resultSet.next()){
-               Customer customer=new Customer(resultSet.getString("username"),resultSet.getString("password"),
-                        resultSet.getString("firstname"),resultSet.getString("lastname"),
-                        resultSet.getLong("nationalcode"),resultSet.getString("nationalcode"),
-                        resultSet.getLong("phonenumber"));
-               customer.setId(id);
-                return customer;
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
+    public Customer findById(Long id) {
+        try (var session = sessionFactory.openSession()) {
+            return session.find(Customer.class, id);
         }
-        return null;
     }
 
     @Override
-    public Integer save(Customer entity) {
-        String sql="insert into customer(firstname,lastname,username,password,nationalcode,email,phonenumber) values (?,?,?,?,?,?,?)";
-        try{
-            PreparedStatement preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,entity.getFirstName());
-            preparedStatement.setString(2,entity.getLastName());
-            preparedStatement.setString(3,entity.getUsername());
-            preparedStatement.setString(4,entity.getPassword());
-            preparedStatement.setLong(5,entity.getNationalCode());
-            preparedStatement.setString(6,entity.getEmail());
-            preparedStatement.setLong(7,entity.getPhoneNumber());
-            preparedStatement.executeUpdate();
-            String sql1="select id from customer where nationalcode=?";
-            preparedStatement=connection.prepareStatement(sql1);
-            preparedStatement.setLong(1,entity.getNationalCode());
-            ResultSet resultSet=preparedStatement.executeQuery();
-            if(resultSet.next()){
-                return  resultSet.getInt("id");
-            }return 0;
-        }catch (SQLException e){
-
+    public Long save(Customer entity) {
+        try (var session = sessionFactory.openSession()) {
+            var transaction = session.beginTransaction();
+            try {
+                session.save(entity);
+                transaction.commit();
+                return entity.getId();
+            } catch (Exception e) {
+                transaction.rollback();
+                throw e;
+            }
         }
-        return null;
     }
 
     @Override
     public void update(Customer entity) {
-        String sql="select * from customer where  id=?";
-        try {
-            PreparedStatement preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setInt(1,entity.getId());
-            ResultSet resultSet=preparedStatement.executeQuery();
-            if(resultSet.next()){
-                String sql1="update customer set  firstname=?,password=?,username=? ,password=?,nationalcode=?,email=?,phonenumber=? where id=?";
-                PreparedStatement preparedStatement1=connection.prepareStatement(sql1);
-                preparedStatement1.setString(1,entity.getFirstName());
-                preparedStatement1.setString(2,entity.getLastName());
-                preparedStatement1.setString(3,entity.getUsername());
-                preparedStatement1.setString(4,entity.getPassword());
-                preparedStatement1.setLong(5,entity.getNationalCode());
-                preparedStatement1.setString(6,entity.getEmail());
-                preparedStatement1.setLong(7,entity.getPhoneNumber());
-                preparedStatement1.setInt(8,entity.getId());
-                preparedStatement1.executeUpdate();
-            }
 
-        }catch (SQLException e){
-            e.printStackTrace();
+        try (var session = sessionFactory.openSession()) {
+            var transaction = session.beginTransaction();
+            try {
+                session.update(entity);
+                transaction.commit();
+            } catch (Exception e) {
+                transaction.rollback();
+                throw e;
+            }
         }
     }
 
     @Override
-    public void deleteById(Integer id) {
-        String sql="delete from customer where id=?";
-        try {
-            PreparedStatement preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setInt(1,id);
-            preparedStatement.executeUpdate();
-        }catch (SQLException e){}
+    public void deleteById(Long id) {
+        Customer customer=findById(id);
+        try (var session = sessionFactory.openSession()) {
+            var transaction = session.beginTransaction();
+            try {
+                session.delete(customer);
+                transaction.commit();
+            } catch (Exception e) {
+                transaction.rollback();
+                throw e;
+            }
+        }
     }
 
     @Override
     public Customer findByUsernameAndPassword(Customer customer) {
-        String sql="select * from customer where username=? and password=?";
-        try {
-            PreparedStatement preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,customer.getUsername());
-            preparedStatement.setString(2,customer.getPassword());
-            ResultSet resultSet=preparedStatement.executeQuery();
-            if(resultSet.next()){
-                Customer customer1=new Customer(resultSet.getString("username"),resultSet.getString("password"),
-                        resultSet.getString("firstname"),resultSet.getString("lastname"),
-                        resultSet.getLong("nationalcode"),resultSet.getString("nationalcode"),
-                        resultSet.getLong("phonenumber"));
-                customer1.setId(resultSet.getInt("id"));
-                return customer1;
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return null;
+        Session session = sessionFactory.openSession();
+        Query q = session.createQuery("from Customer where Customer .username = :name and Customer .password = :pass");
+        q.setParameter("name",customer.getUsername());
+        q.setParameter("pass",customer.getPassword());
+        Customer customer1 = (Customer) q.getResultList();
+        return customer1;
     }
 }

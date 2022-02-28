@@ -17,7 +17,7 @@ public class CustomerServiceImpl  implements CustomerService {
     }
 
     @Override
-    public Integer save(Customer entity) {
+    public Long save(Customer entity) {
        return  customerRepository.save(entity);
     }
 }
