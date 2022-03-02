@@ -83,10 +83,12 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
     public Customer findByUsernameAndPassword(Customer customer) {
         Session session = sessionFactory.openSession();
-        Query q = session.createQuery("from Customer where Customer .username = :name and Customer .password = :pass");
+        Query q = session.createQuery("from Customer where username = :name and password = :pass");
         q.setParameter("name",customer.getUsername());
         q.setParameter("pass",customer.getPassword());
-        Customer customer1 = (Customer) q.getResultList();
-        return customer1;
+        List<Customer> customers = (List<Customer>) q.getResultList();
+        if(customers.size()>0)
+        return customers.get(0);
+        else return null;
     }
 }

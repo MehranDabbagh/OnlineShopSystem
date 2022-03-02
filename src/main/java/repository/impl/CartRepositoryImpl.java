@@ -72,14 +72,18 @@ public class CartRepositoryImpl implements CartRepository {
             preparedStatement.setBoolean(3,entity.isDone());
             preparedStatement.setLong(4,entity.getCostumer().getId());
             preparedStatement.executeUpdate();
-            String sql1="select id from cart where address=? and phonenumber=?  and done=? and customerid=?";
+            String sql1="select * from cart where address=? and phonenumber=?  and done=? and customerid=?";
             preparedStatement=connection.prepareStatement(sql1);
             preparedStatement.setString(1,entity.getAddress());
             preparedStatement.setLong(2,entity.getPhoneNumber());
-            preparedStatement.setBoolean(3,false);
+            preparedStatement.setBoolean(3,true);
             preparedStatement.setLong(4,entity.getCostumer().getId());
             ResultSet resultSet=preparedStatement.executeQuery();
+            System.out.println(entity.getAddress());
+            System.out.println(entity.getPhoneNumber());
+            System.out.println(entity.getCostumer().getId());
             if(entity.getProductList()!=null && resultSet.next()) {
+                System.out.println("here");
                 for (Product product : entity.getProductList()) {
                     String insert = "insert into cartproducts (cartid,productid) values (?,?)";
                     PreparedStatement preparedStatement1 = connection.prepareStatement(insert);
